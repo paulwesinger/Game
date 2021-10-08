@@ -28,6 +28,7 @@ bool InitGL::init()
         }
         loginfo("GLFW Init OK"," INITGL");
 
+
         glfwMakeContextCurrent(window);
    //     gladLoadGL(glfwGetProcAddress);
         glfwSwapInterval(1);
@@ -37,6 +38,7 @@ bool InitGL::init()
         glfwSetKeyCallback(window, key_callback);
 
         glClearColor(0.0,0.0,1.0,1.0);
+
         while (!glfwWindowShouldClose(window)) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             // Drawing and so on

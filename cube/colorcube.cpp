@@ -9,13 +9,14 @@
 #include <iostream>
 
 #include <GL/gl.h>
+
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../logs/logs.h"
 #include "../utils/utils.h"
-#include "../imageloader/loadimage.h"
+//#include "../imageloader/loadimage.h"
 
 
 static const GLushort vertex_NormalIndices[] =

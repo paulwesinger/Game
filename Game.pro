@@ -18,11 +18,14 @@ SOURCES += \
        cube/colorcube.cpp \
     #    cube/cube.cpp \
         initgl.cpp \
+    lights/light.cpp \
         logs/logs.cpp \
         main.cpp \
     #    projection/projection.cpp \
     #    shaders/shader.cpp \
-    #    utils/utils.cpp
+ \    #    utils/utils.cpp
+    utils/utils.cpp \
+    vecmath/vecmath.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -38,10 +41,13 @@ HEADERS += \
    # cube/colorcube.h \
     cube/cube.h \
     initgl.h \
+    lights/light.h \
     logs/logs.h \
    # projection/projection.h \
    # shaders/shader.h \
-   # utils/utils.h
+ \   # utils/utils.h
+    utils/utils.h \
+    vecmath/vecmath.h
 
 DISTFILES += \
     ShaderSources/FogShaderExample.txt \

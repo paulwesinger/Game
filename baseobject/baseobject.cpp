@@ -8,7 +8,7 @@
  */
 #include "../logs/logs.h"
 #include "../utils/utils.h"
-#include "../imageloader/loadimage.h"
+//#include "../imageloader/loadimage.h"
 #include "../vecmath/vecmath.h"
 
 
@@ -68,11 +68,11 @@ bool BaseObject::addTexture(std::vector<std::string> path, std::string obj) {
     _HasTextures = false;
     for ( uint i = 0; i< path.size(); i++) {
 
-        SDL_Surface * surface = CLoadImage::getSurface(path[i], "BaseObject::Init");
-        if ( surface ) {
-            int width = surface->w;
-            int height = surface->h;
-            char * data = static_cast<char*>(surface->pixels);
+     //   SDL_Surface * surface = CLoadImage::getSurface(path[i], "BaseObject::Init");
+        if (false/* surface*/ ) {
+            int width = 100;//surface->w;
+            int height = 100;//surface->h;
+            char * data =""; //static_cast<char*> (surface->pixels);
             _HasTextures = true;
             if ( data ) {
 

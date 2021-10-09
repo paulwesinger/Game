@@ -15,7 +15,7 @@
 
 #include "../logs/logs.h"
 #include "../utils/utils.h"
-#include "../imageloader/loadimage.h"
+//#include "../imageloader/loadimage.h"
 
 
 #include "cube.h"

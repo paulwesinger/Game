@@ -7,7 +7,6 @@
  * Created on 31. Dezember 2018, 20:50
  */
 #include <cstdio>
-#include <SDL2/SDL.h>
 
 #include <glm/glm.hpp>
 

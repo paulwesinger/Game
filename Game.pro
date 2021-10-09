@@ -7,23 +7,25 @@ CONFIG -= app_bundle
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-unix:LIBS += -L /usr/lib64 -lglfw -L/usr/lib64/GL -lGL
+unix:LIBS += -L /usr/lib64 -lglfw -L/usr/lib64/GL -lGL -L/usr/lib64/ -lGLEW
 
 SOURCES += \
-    #    Animate/animate.cpp \
+    Animate/animate.cpp \
     #    base2d/base2d.cpp \
-        baseobject/baseobject.cpp \
+    baseobject/baseobject.cpp \
     #    buttons/button.cpp \
     #    camera/camera.cpp \
-       cube/colorcube.cpp \
-    #    cube/cube.cpp \
-        initgl.cpp \
+    #cube/colorcube.cpp \
+    camera/camera.cpp \
+    cube/colorcube.cpp \
+    cube/cube.cpp \
+    fileutils/fileutil.cpp \
+    initgl.cpp \
     lights/light.cpp \
-        logs/logs.cpp \
-        main.cpp \
-    #    projection/projection.cpp \
-    #    shaders/shader.cpp \
- \    #    utils/utils.cpp
+    logs/logs.cpp \
+    main.cpp \
+    projection/projection.cpp \
+    shaders/shader.cpp \
     utils/utils.cpp \
     vecmath/vecmath.cpp
 
@@ -33,19 +35,23 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-   # Animate/animate.h \
+   Animate/animate.h \
    # base2d/base2d.h \
     baseobject/baseobject.h \
    # buttons/button.h \
    # camera/camera.h \
    # cube/colorcube.h \
+    camera/camera.h \
+    cube/colorcube.h \
     cube/cube.h \
+    defines.h \
+    fileutils/fileutil.h \
     initgl.h \
     lights/light.h \
     logs/logs.h \
-   # projection/projection.h \
+    projection/projection.h \
    # shaders/shader.h \
- \   # utils/utils.h
+    shaders/shader.h \
     utils/utils.h \
     vecmath/vecmath.h
 

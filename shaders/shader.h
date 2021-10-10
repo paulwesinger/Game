@@ -1,10 +1,12 @@
 #ifndef SHADER_H
 #define SHADER_H
 
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+#include <GL/glew.h>
 
 #include <string>
 #include <stdio.h>
-#include  <GL/glew.h>
 #include "../fileutils/fileutil.h"
 
 

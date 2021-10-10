@@ -1,9 +1,11 @@
-#include <GL/gl.h>
+//#include <GL/gl.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 #include "logs/logs.h"
+#include "utils/utils.h"
 #include "initgl.h"
+#include "textrenderer/textrender.h"
 
 InitGL::InitGL()
 {
@@ -19,34 +21,60 @@ bool InitGL::init()
         //---------------------------------------------------
         // init window
         //---------------------------------------------------
-        window = glfwCreateWindow(1024,800,"Game",NULL, NULL);
+        _Window = glfwCreateWindow(1024,800,"Game",glfwGetPrimaryMonitor(), NULL);
 
-        if (! window)
+        if (! _Window)
         {
             glfwTerminate();
             exit(EXIT_FAILURE);
         }
         loginfo("GLFW Init OK"," INITGL");
 
+        // -------------------------------------
+        // Get Monitors
+        // -------------------------------------
+        getMonitors();
 
-        glfwMakeContextCurrent(window);
-   //     gladLoadGL(glfwGetProcAddress);
+        glfwMakeContextCurrent(_Window);
+
+        glewExperimental = GL_TRUE;
+        glewInit();
+
         glfwSwapInterval(1);
-
         loginfo("GLFWindow Init OK"," INITGL");
-
-        glfwSetKeyCallback(window, key_callback);
-
+        glfwSetKeyCallback(_Window, key_callback);
         glClearColor(0.0,0.0,1.0,1.0);
 
-        while (!glfwWindowShouldClose(window)) {
+
+        //test !!
+        sPoint sp ;
+        sp.x = 2800; sp.y = 100;
+        TextRender * text = new TextRender(3200,1800,sp);
+        text->AddString("Test String");
+
+        static int fak = 1;
+
+        while (!glfwWindowShouldClose(_Window)) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            // 2D - Stuff
+            Prepare2D();
+
+            text->SetTextColor(glm::vec4(0.5,0.8,0.7,0.4));
+            text->SetScale(1.0);
+            sp.x = 2800; sp.y += fak;
+            text->setPos(sp);
+            text->setText(0,"irgendwas");
+            text->Render();
+            //Restore 3D
+            Restore3D();
+
             // Drawing and so on
-            glfwSwapBuffers(window);
+            glfwSwapBuffers(_Window);
             glfwPollEvents();
         }
 
-        glfwDestroyWindow(window);
+        glfwDestroyWindow(_Window);
         loginfo("Destroy Window"," INITGL");
 
         exit(EXIT_SUCCESS);
@@ -57,6 +85,43 @@ bool InitGL::init()
         logwarn("GLFW Init fehlgeschlagen !  - Terminte","InitGL");
         return false;
     }
+}
+
+// ----------------------------------------
+// Monitor properties
+//-----------------------------------------
+void InitGL::getMonitors()
+{
+    _Monitors = glfwGetMonitors(&_CountMonitors);
+    if (_Monitors != nullptr)
+    {
+        _PrimaryMonitor = _Monitors[0];
+        for (int i = 0; i < _CountMonitors; i++)
+        {
+            logimage("Video modes Monitor " + IntToString(i));
+            const GLFWvidmode * modes = glfwGetVideoModes(_Monitors[i],&_CountMonitorProperties);
+            for (int j = 0; j < _CountMonitorProperties; j++ )
+            {
+                logimage("X-Res: " + IntToString(modes[j].width) + "  " + "Y-Res: " + IntToString(modes[j].height) );
+            }
+        }
+    }
+}
+
+
+void InitGL::Prepare2D() {
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+    glDepthMask(0);
+}
+
+void InitGL::Restore3D() {
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+
+    glFrontFace(GL_CCW);
+    glEnable(GL_BLEND);
+    glDepthMask(1);
 }
 
 // ----------------------------------------

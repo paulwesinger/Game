@@ -1,12 +1,10 @@
 #include "shader.h"
-
-#include "shader.h"
 #include <iostream>
 #include <stdio.h>
 #include <string>
 #include "../logs/logs.h"
 
-
+/*
 
 static const char vertexshadersource[]=
         "#version 440 core 					\n"
@@ -38,7 +36,7 @@ static const char* fragmentshadersource=
             "	fragcolor = vs_color;				\n"
         "}";
 
-
+*/
 Shader::Shader()
 {
     //Komment

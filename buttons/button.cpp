@@ -16,7 +16,7 @@ CButton::CButton(int resx, int resy, std::string path, std::string text) :
 
 void CButton::init() {
 
-     _ButtonColors = colorscheme.setScheme(DARK);
+   //  _ButtonColors = colorscheme.setScheme(DARK);
 
     setWidth(BUTTON::DEFAULT_WIDTH);
     setHeight(BUTTON::DEFAULT_HEIGHT);

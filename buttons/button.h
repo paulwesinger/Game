@@ -2,7 +2,7 @@
 #define CBUTTON_H
 
 #include "../base2d/base2d.h"
-#include "../colors/colorscheme.h"
+//#include "../colors/colorscheme.h"
 #include "../textrenderer/textrender.h"
 //#include "../defaults.h"
 
@@ -85,9 +85,6 @@ protected:
 private:
 
     void init();
-
-    CColorScheme colorscheme;
-    sButtonScheme _ButtonColors; // die vecs mit den farben
 };
 
 // ----------------------------------------------------

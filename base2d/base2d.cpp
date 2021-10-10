@@ -9,7 +9,7 @@
  */
 #include "base2d.h"
 #include "../imageloader/loadimage.h"
-#include <SDL2/SDL_image.h>
+//#include <SDL2/SDL_image.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>

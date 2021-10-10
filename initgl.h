@@ -14,7 +14,25 @@ public:
 
     static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 protected:
-    GLFWwindow * window;
+    //------------------------
+    // The main win
+    //------------------------
+    GLFWwindow *        _Window;
+
+    void getMonitors();
+    void showProperties(int i);
+
+    //------------------------
+    //Monitors and propertier
+    //------------------------
+    int                 _CountMonitors;
+    int                 _CountMonitorProperties;
+    GLFWmonitor **      _Monitors;
+    GLFWmonitor *       _PrimaryMonitor;
+private:
+    void Prepare2D();
+    void Restore3D();
+
 
 };
 

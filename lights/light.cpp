@@ -1,7 +1,6 @@
 #include "light.h"
 #include "../vecmath/vecmath.h"
 #include <glm/glm.hpp>
-//#include <glm/vec3.hpp>
 
 light::light()
 {

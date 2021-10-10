@@ -1,9 +1,14 @@
 #ifndef BASE2D_H
 #define BASE2D_H
 
+
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+#include <GL/glew.h>
+
 #include <cstdio>
 #include <string>
-#include <GL/glew.h>
+
 //#include <glad.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>

@@ -23,6 +23,7 @@ SOURCES += \
     lights/light.cpp \
     logs/logs.cpp \
     main.cpp \
+    monitors.cpp \
     projection/projection.cpp \
     shaders/shader.cpp \
     textrenderer/textrender.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     initgl.h \
     lights/light.h \
     logs/logs.h \
+    monitors.h \
     projection/projection.h \
     shaders/shader.h \
     shaders/shader.h \

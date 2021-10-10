@@ -3,7 +3,8 @@
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-//#include "glad/include/glad/glad.h"
+
+#include "monitors.h"
 
 class InitGL
 {
@@ -19,16 +20,11 @@ protected:
     //------------------------
     GLFWwindow *        _Window;
 
-    void getMonitors();
-    void showProperties(int i);
-
     //------------------------
     //Monitors and propertier
     //------------------------
-    int                 _CountMonitors;
-    int                 _CountMonitorProperties;
-    GLFWmonitor **      _Monitors;
-    GLFWmonitor *       _PrimaryMonitor;
+    Monitors monitors;
+
 private:
     void Prepare2D();
     void Restore3D();

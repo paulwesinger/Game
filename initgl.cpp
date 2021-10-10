@@ -33,7 +33,8 @@ bool InitGL::init()
         // -------------------------------------
         // Get Monitors
         // -------------------------------------
-        getMonitors();
+        monitors.getMonitors();
+
 
         glfwMakeContextCurrent(_Window);
 
@@ -86,28 +87,6 @@ bool InitGL::init()
         return false;
     }
 }
-
-// ----------------------------------------
-// Monitor properties
-//-----------------------------------------
-void InitGL::getMonitors()
-{
-    _Monitors = glfwGetMonitors(&_CountMonitors);
-    if (_Monitors != nullptr)
-    {
-        _PrimaryMonitor = _Monitors[0];
-        for (int i = 0; i < _CountMonitors; i++)
-        {
-            logimage("Video modes Monitor " + IntToString(i));
-            const GLFWvidmode * modes = glfwGetVideoModes(_Monitors[i],&_CountMonitorProperties);
-            for (int j = 0; j < _CountMonitorProperties; j++ )
-            {
-                logimage("X-Res: " + IntToString(modes[j].width) + "  " + "Y-Res: " + IntToString(modes[j].height) );
-            }
-        }
-    }
-}
-
 
 void InitGL::Prepare2D() {
     glDisable(GL_CULL_FACE);

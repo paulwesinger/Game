@@ -18,10 +18,21 @@ bool InitGL::init()
 {
     if (glfwInit()) {
 
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,5);
+
+        // --------------------------------------------------
+        // Get Monitors
+        // --------------------------------------------------
+         monitors.getMonitors();
+
         //---------------------------------------------------
         // init window
         //---------------------------------------------------
-        _Window = glfwCreateWindow(1024,800,"Game",glfwGetPrimaryMonitor(), NULL);
+        _ResolutionX = 3200;
+        _ResolutionY = 1800;
+
+        _Window = glfwCreateWindow(_ResolutionX,_ResolutionY,"Game",glfwGetPrimaryMonitor(), NULL);
 
         if (! _Window)
         {
@@ -29,12 +40,6 @@ bool InitGL::init()
             exit(EXIT_FAILURE);
         }
         loginfo("GLFW Init OK"," INITGL");
-
-        // -------------------------------------
-        // Get Monitors
-        // -------------------------------------
-        monitors.getMonitors();
-
 
         glfwMakeContextCurrent(_Window);
 
@@ -46,11 +51,10 @@ bool InitGL::init()
         glfwSetKeyCallback(_Window, key_callback);
         glClearColor(0.0,0.0,1.0,1.0);
 
-
         //test !!
         sPoint sp ;
-        sp.x = 2800; sp.y = 100;
-        TextRender * text = new TextRender(3200,1800,sp);
+        sp.x = 1800; sp.y = 50;
+        TextRender * text = new TextRender(_ResolutionX,_ResolutionY,sp);
         text->AddString("Test String");
 
         static int fak = 1;
@@ -63,7 +67,7 @@ bool InitGL::init()
 
             text->SetTextColor(glm::vec4(0.5,0.8,0.7,0.4));
             text->SetScale(1.0);
-            sp.x = 2800; sp.y += fak;
+            sp.y += fak;
             text->setPos(sp);
             text->setText(0,"irgendwas");
             text->Render();

@@ -12,7 +12,7 @@ public:
     Monitors();
 
     void getMonitors();
-    void showProperties(int i);
+    void showProperties(int monitorindex, int propertyindex);
 
 protected:
     //------------------------

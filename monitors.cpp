@@ -23,13 +23,13 @@ void Monitors::getMonitors()
             videoprops.push_back( glfwGetVideoModes(_Monitors[i],&_CountMonitorProperties));
             for (int j = 0; j < _CountMonitorProperties; j++ )
             {
-                logimage("X-Res: " + IntToString(videoprops.at(i)[j].width) + "  " + "Y-Res: " + IntToString(videoprops.at(i)[j].height) );
+                showProperties(i,j);
             }
         }
     }
 }
 
-void Monitors::showProperties(int i) {
-    if (i < _CountMonitorProperties )
-        logimage("X-Res: " + IntToString(videoprops.at(i)->width) + "  " + "Y-Res: " + IntToString(videoprops.at(i)->height) );
+void Monitors::showProperties(int monitorindex, int propertyindex) {
+    if (propertyindex < _CountMonitorProperties  &&  monitorindex < _CountMonitors)
+        logimage("X-Res: " + IntToString(videoprops.at(monitorindex)[propertyindex].width) + "  " + "Y-Res: " + IntToString(videoprops.at(monitorindex)[propertyindex].height));
 }

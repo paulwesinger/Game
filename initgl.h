@@ -19,6 +19,8 @@ protected:
     // The main win
     //------------------------
     GLFWwindow *        _Window;
+    int                 _ResolutionX;
+    int                 _ResolutionY        ;
 
     //------------------------
     //Monitors and propertier

@@ -32,6 +32,7 @@ public:
     Base2D(const Base2D& orig);
     virtual ~Base2D();
     bool Init(int resx,int resy);
+    bool initLine(int resx, int resy);
     void setImage(std::string path);
     void useShader(int type);
 
@@ -55,6 +56,7 @@ public:
     virtual bool  intersect(int x, int y);
 
     virtual void Render();
+    virtual void RenderLine(int x, int y, int x1, int y1);
     virtual void OnClick();
 
 protected:
@@ -73,18 +75,20 @@ private:
     int _ResX;
     int _ResY;
 
-    GLuint _VAO;
-    GLuint _VBO;
-    GLuint _EBO;
+    GLuint _VAO, _VAO_LINE;
+    GLuint _VBO, _VBO_LINE;
+    GLuint _EBO, _EBO_LINE;
     //-----------------
     // Shaders
     //-----------------
     Shader * shader;
+    Shader * lineShader;
     // ints for shader returns
     int vs;
     int fs;
     int _TextureShader;  // the linked shaders
     int _ColorShader;
+    int _LineShader;
     int _CurrentShader;
     std::string _ImagePath;
 

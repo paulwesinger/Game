@@ -145,6 +145,15 @@ typedef struct {
     int lasty,y;
 } MOUSE;
 
+
+static const int MOUSE_NO_EVENT      = 0;
+static const int MOUSE_BTN_Left_Clk  = 1;
+static const int MOUSE_BTN_Right_Clk = 2;
+static const int MOUSE_BTN_MiddLe_Clk= 3;
+static const int MOUSE_START_DRAG    = 4;
+static const int MOUSE_DRAG          = 5;
+static const int MOUSE_DRAG_RELEASE  = 6;
+
 enum Events{
 
     NO_INPUT                = 0,
@@ -187,11 +196,6 @@ enum Events{
     MOUSE_Move_Left ,         
     MOUSE_Move_Up,      
     MOUSE_Move_Down,
-
-    MOUSE_BTN_Left_Clk   = 10000 ,
-    MOUSE_BTN_Right_Clk ,    
-    MOUSE_BTN_MiddLe_Clk,    
-
     MOUSE_Wheel 
 };
 

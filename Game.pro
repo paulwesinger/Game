@@ -24,6 +24,7 @@ SOURCES += \
     logs/logs.cpp \
     main.cpp \
     monitors.cpp \
+    mouse.cpp \
     projection/projection.cpp \
     shaders/shader.cpp \
     textrenderer/textrender.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     lights/light.h \
     logs/logs.h \
     monitors.h \
+    mouse.h \
     projection/projection.h \
     shaders/shader.h \
     shaders/shader.h \

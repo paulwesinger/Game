@@ -80,18 +80,11 @@ static const GLushort vertex_indices[] =
 {
     0, 1, 2, 3,4, 5
 };
+static const GLushort vertex_indices_Lines[] =
+{
+    0, 1
+};
 
-    static const GLfloat vertex_positions[] =
-    {
-    //  Position             Texture
-        0.08f,  -0.5f,      0.0f,1.0f,  //0.0f,
-        0.08f,  0.1f,       0.0f,0.0f,  //1.0f,
-        0.58f, 0.1f,        0.0f,0.0f,  //1.0f,
-
-        0.58f, -0.5f,       1.0f, 1.0f, //0.0f,
-        0.8f, 0.1f,         1.0f, 0.0f, //1.0f,
-        0.95f, -0.5f,       1.0f, 1.0f //0.0f,
-    };
 
 Base2D::Base2D(int resx, int resy) {
     setImage("");
@@ -182,6 +175,68 @@ void Base2D::setPos(int x, int y) {
 bool Base2D::intersect(int x, int y) {
     return  ( ((x > _Pos.x) && (x < _Pos.x + _Size.w) ) &&
               ((y > _Pos.y) && (y < _Pos.y + _Size.h)) ) ? true : false;
+}
+
+bool Base2D::initLine(int resx, int resy)
+{
+    // ---------------------------
+    // Color Init
+    //----------------------------
+    _Color          = glm::vec4(1.0, 1.0, 1.0, 1.0);
+    _DisableColor   = glm::vec4(0.5, 0.5, 0.5, 0.5);
+    _Enable = true;
+
+    projection =  glm::ortho(0.0f,static_cast<float>(_ResX), static_cast<float>(_ResY), 0.0f,  -1.0f, 1.0f);
+
+    // ---------------------------
+    // Texture Shader init :
+    // ---------------------------
+    _ResX = resx;
+    _ResY = resy;
+    lineShader = new Shader();
+    if (lineShader ) {
+        vs = lineShader -> compileVertexShader(vs2D_src);
+        fs = lineShader -> compileFragmentShader(fs2D_src);
+        _LineShader = lineShader -> CreateProgram(vs,fs);
+
+        if ( _LineShader == 0 )
+            logwarn("Konnte Lineshader nicht ereugen","Base2D" );
+        else
+            loginfo( "LineShader erstellt ID = " + IntToString(_LineShader),"Base2D::initLine");
+    }
+    else
+        logwarn("Konnte shader nicht erzeurgen","Base2D::initLine");
+
+    // -----------------------------------------------
+    // VertexArraobject und VertexBufferObject
+    // -----------------------------------------------
+    glGenVertexArrays(1,&_VAO_LINE);
+    glBindVertexArray(_VAO_LINE);
+    glGenBuffers(1,&_VBO_LINE);
+    glBindBuffer(GL_ARRAY_BUFFER,_VBO_LINE);
+
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(GLfloat) * 10,
+                 nullptr,
+                 GL_DYNAMIC_DRAW);
+
+    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE, 2 * sizeof(GLfloat),(void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE, 3 * sizeof(GLfloat),(void*)(2 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    // --------------   Index
+    glGenBuffers(1,&_EBO_LINE);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_EBO_LINE);
+    glBufferData (GL_ELEMENT_ARRAY_BUFFER,
+                  sizeof (vertex_indices_Lines),
+                  vertex_indices_Lines,
+                  GL_DYNAMIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+    glBindVertexArray(0);
 }
 
 bool Base2D::Init(int resx, int resy) {
@@ -318,6 +373,60 @@ sPoint Base2D::Pos() {
 
 void Base2D::OnClick(){}   // Im child überschreiben
 
+void Base2D::RenderLine(int x, int y, int x1,int y1)
+{
+
+    glUseProgram(_CurrentShader);
+    projection =  glm::ortho(0.0f,static_cast<float>(_ResX),static_cast<float>(_ResY), 0.0f,  -1.0f, 1.0f);
+    //  projection =  glm::ortho(static_cast<float>(_ResX),0.0f, static_cast<float>(_ResY), 0.0f, -1.0f, 1.0f);
+
+    _CurrentShader = _LineShader;
+    glUseProgram(_CurrentShader);
+    mv_projectloc = glGetUniformLocation(_CurrentShader,"projection");
+
+    uniform_colorloc   = glGetUniformLocation(_CurrentShader,"col2D");
+
+    FLOAT2 p0;
+    FLOAT2 p1;
+
+    p0.x = static_cast<float>(x);
+    p0.y = static_cast<float>(y);
+
+    p1.x = static_cast<float>(x1);
+    p1.y = static_cast<float>(y1);
+
+    glm::vec4 col;
+    col.r = 1.0f;
+    col.g = 1.0f;
+    col.b = 1.0f;
+    col.a = 1.0f;
+
+    GLfloat vertices[2][5] = {
+        {p0.x, p0.y, col.r, col.g, col.b},
+        {p1.x, p1.y, col.r, col.g, col.b}
+    };
+
+    glm::mat4 Model(1.0f);
+    glm::mat4 mvp = projection * Model ;
+    glUniformMatrix4fv(mv_projectloc, 1, GL_FALSE, glm::value_ptr(mvp)); //projection));
+
+    glBindVertexArray(_VAO_LINE);
+    glBindBuffer(GL_ARRAY_BUFFER,_VBO_LINE);
+    glBufferSubData(GL_ARRAY_BUFFER,0,sizeof(vertices),vertices);
+
+    // Texture
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_EBO_LINE);
+    glPointSize(4);
+    glDrawElements( GL_LINE, 2, GL_UNSIGNED_SHORT,vertex_indices_Lines);
+
+    // Aufräumen
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D,0);
+
+}
+
 
 // ---------------------------------------------------
 // Render Function
@@ -347,7 +456,6 @@ void Base2D::Render( ) {
 
     GLfloat px = static_cast<GLfloat>(_Pos.x);
     GLfloat py = static_cast<GLfloat>(_Pos.y);
-
 
     GLfloat vertices[6][4] = {
             { px,     py  + h,        0.0, 1.0},//0.0 },

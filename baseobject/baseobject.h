@@ -107,7 +107,7 @@ protected:
     GLuint _DrawMode;
 
     // Light
-     light *  _Light;
+    light *  _Light;
 
 private:
     void init();

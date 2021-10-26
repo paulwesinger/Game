@@ -211,6 +211,7 @@ void CCube::Init() {
 
     _CountTextures = 0;
     _Color = vec4(1.0f,1.0f,1.0f,1.0f);
+    _Light = nullptr;
 
     // Buffers
     //Genererate vertexarray object and buffers
@@ -222,16 +223,20 @@ void CCube::Init() {
     glBindBuffer(GL_ARRAY_BUFFER,position_buffer);
     // Vertex mit Normaler
     glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(vertex_normals),
-                 vertex_normals,
+                 //sizeof(vertex_normals),
+                 //vertex_normals,
+                 sizeof(vertex_positions),
+                 vertex_positions,
                  GL_DYNAMIC_DRAW);
 
     // Index Buffer
     glGenBuffers(1,&index_buffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,index_buffer);
     glBufferData (GL_ELEMENT_ARRAY_BUFFER,
-                  sizeof (vertex_NormalIndices),
-                  vertex_NormalIndices,
+                  //sizeof (vertex_NormalIndices),
+                  //vertex_NormalIndices,
+                  sizeof(vertex_indices),
+                  vertex_indices,
                   GL_DYNAMIC_DRAW);
 
     // Vertex
@@ -351,7 +356,7 @@ void CCube::Draw(Camera * cam) {
 
     glBindVertexArray(vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,index_buffer);
-    glDrawElements( GL_TRIANGLES, sizeof(vertex_NormalIndices), GL_UNSIGNED_SHORT, 0);//GL_TRIANGLES
+    glDrawElements( GL_TRIANGLES, sizeof(/*vertex_NormalIndices*/vertex_indices), GL_UNSIGNED_SHORT, 0);//GL_TRIANGLES
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
     glBindTexture(GL_TEXTURE_2D,0);

@@ -1,10 +1,11 @@
         #version 450 core
 		                                                          
-	layout (location = 1) in vec3 veccolor;                            
-	layout (location = 2) in vec2 tex;                                 
+//	layout (location = 1) in vec3 veccolor;                            
+//	layout (location = 2) in vec2 tex;                                 
 	out vec4 color;                                                    
-	uniform vec3 triangleColor;                                        
-	//out vec4 FragColor                                               
+                               
+	//out vec4 FragColor        
+	uniform vec4 changecolor;                                       
 		                                                           
 	in VS_OUT                                                          
 	{                                                                  
@@ -29,6 +30,6 @@
 		// if(IsTrivial(30,30,20,80))                                     
 	     	//	color = vec4(1.0, 1.0, 1.0,0.1);                                
 	    	//else                                                               
-	    	color = fs_in.color;         
+	    	color = fs_in.color * changecolor;         
 
 	}    

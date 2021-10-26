@@ -70,7 +70,7 @@ bool BaseObject::addTexture(std::vector<std::string> path, std::string obj) {
     for ( uint i = 0; i< path.size(); i++) {
 
         SDL_Surface * surface = CLoadImage::getSurface(path[i], "BaseObject::Init");
-        if (false/* surface*/ ) {
+        if (surface ) {
             int width = surface->w;
             int height = 100;//surface->h;
             char * data = static_cast<char*> (surface->pixels);

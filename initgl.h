@@ -11,7 +11,10 @@
 #include "shaders/shader.h"
 #include "utils/utils.h"
 #include "fileutils/fileutil.h"
-
+#include "cube/cube.h"
+#include "projection/projection.h"
+#include "camera/camera.h"
+#include "landscape/landscape.h"
 
 class InitGL
 {
@@ -32,9 +35,12 @@ protected:
     //------------------------------------
     GLFWwindow  *       _Window;
     Shader      *       _Shader;
+
+    LandScape   *       _LandScape;
     fileUtil    *       _FileUtil;
     int                 _ResolutionX;
     int                 _ResolutionY;
+    double              _Elapsed;
 
     void                InitShaders();
     void                InitUtils();
@@ -60,9 +66,14 @@ private:
     void Prepare2D();
     void Restore3D();
 
+    Projection  * projection;
+    Camera      * camera;
+
     TextRender * text;
     Base2D * line;
     Base2D * test2D;
+
+    CCube * cube;
 };
 
 #endif // INITGL_H

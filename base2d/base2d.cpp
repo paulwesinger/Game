@@ -24,6 +24,45 @@
 const int RECT_WIDTH = 200;
 const int RECT_HEIGHT = 50;
 
+//----------------------------
+// vertex shader for line
+//----------------------------
+static const GLchar * vsLine_src = {
+    "#version 450 core                                              \n"
+    "layout (location = 0) in vec2 vertex;                          \n"
+    "layout (location = 1) in vec3 col;                             \n"
+
+    "uniform mat4 projection;                                       \n"
+    "out VS_OUT {                                                   \n"
+    "   vec3 color;                                                 \n"
+    "} vs_out;                                                      \n"
+
+    "void main()                                                    \n"
+    "{                                                              \n"
+    "   gl_Position = projection * vec4(vertex,0.0,1.0);            \n"
+    "   vs_out.color = col;                                         \n"
+   "}                                                               \n"
+};
+
+
+static const GLchar * fsLine_src = {
+    "#version 440 core                                              \n"
+
+    "in VS_OUT {                                                    \n"
+    "   vec3 color;                                                    \n"
+    "} fs_in;                                                       \n"
+
+    "out vec4 fragcolor;                                            \n"
+    "uniform vec4 col2D;                                            \n"
+
+    "void main()                                                    \n"
+    "{                                                              \n"
+
+    "   fragcolor =   col2D * vec4(fs_in.color,1.0) ;                \n"
+    "}                                                                "
+};
+
+
 
 static const GLchar * vs2D_src = {
     "#version 440 core                                              \n"
@@ -195,8 +234,8 @@ bool Base2D::initLine(int resx, int resy)
     _ResY = resy;
     lineShader = new Shader();
     if (lineShader ) {
-        vs = lineShader -> compileVertexShader(vs2D_src);
-        fs = lineShader -> compileFragmentShader(fs2D_src);
+        vs = lineShader -> compileVertexShader(vsLine_src);
+        fs = lineShader -> compileFragmentShader(fsLine_src);
         _LineShader = lineShader -> CreateProgram(vs,fs);
 
         if ( _LineShader == 0 )
@@ -376,15 +415,14 @@ void Base2D::OnClick(){}   // Im child überschreiben
 void Base2D::RenderLine(int x, int y, int x1,int y1)
 {
 
-    glUseProgram(_CurrentShader);
+    //glUseProgram(_CurrentShader);
     projection =  glm::ortho(0.0f,static_cast<float>(_ResX),static_cast<float>(_ResY), 0.0f,  -1.0f, 1.0f);
     //  projection =  glm::ortho(static_cast<float>(_ResX),0.0f, static_cast<float>(_ResY), 0.0f, -1.0f, 1.0f);
 
-    _CurrentShader = _LineShader;
-    glUseProgram(_CurrentShader);
-    mv_projectloc = glGetUniformLocation(_CurrentShader,"projection");
+    glUseProgram(_LineShader);
+    mv_projectloc = glGetUniformLocation(_LineShader,"projection");
 
-    uniform_colorloc   = glGetUniformLocation(_CurrentShader,"col2D");
+    uniform_colorloc   = glGetUniformLocation(_LineShader,"col2D");
 
     FLOAT2 p0;
     FLOAT2 p1;

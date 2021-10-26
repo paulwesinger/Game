@@ -20,6 +20,7 @@ SOURCES += \
     fileutils/fileutil.cpp \
     imageloader/loadimage.cpp \
     initgl.cpp \
+    landscape/landscape.cpp \
     lights/light.cpp \
     logs/logs.cpp \
     main.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     fileutils/fileutil.h \
     imageloader/loadimage.h \
     initgl.h \
+    landscape/landscape.h \
     lights/light.h \
     logs/logs.h \
     monitors.h \

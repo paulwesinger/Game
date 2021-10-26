@@ -269,7 +269,10 @@ void Camera::SetMotions(uint motx,uint moty,MOUSE m,uint elapsed) {
 
 
 
-void Camera::SetDir(glm::vec3 d ) { _Dir = d; }
+void Camera::SetDir(glm::vec3 d ) {
+    _Dir = d;
+    glm::normalize(_Dir);
+}
 
 
 
